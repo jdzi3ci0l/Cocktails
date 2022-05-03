@@ -95,6 +95,33 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error)
                 }
             }
+        case Sections.Shots.rawValue:
+            APICaller.shared.getCocktails(byCategory: .shot) { result in
+                switch result {
+                case .success(let cocktails):
+                    cell.configure(with: cocktails)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case Sections.SoftDrinks.rawValue:
+            APICaller.shared.getCocktails(byCategory: .soft) { result in
+                switch result {
+                case .success(let cocktails):
+                    cell.configure(with: cocktails)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case Sections.PartyDrinks.rawValue:
+            APICaller.shared.getCocktails(byCategory: .party) { result in
+                switch result {
+                case .success(let cocktails):
+                    cell.configure(with: cocktails)
+                case .failure(let error):
+                    print(error)
+                }
+            }
         default:
             return UITableViewCell()
         }

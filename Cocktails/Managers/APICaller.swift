@@ -18,6 +18,20 @@ enum APIError: Error {
     case failedToGetData
 }
 
+enum CocktailCategory: String {
+    case ordinary = "Ordinary_Drink"
+    case cocktail = "Cocktail"
+    case shake = "Shake"
+    case other = "Other/Unknown"
+    case cocoa = "Cocoa"
+    case shot = "Shot"
+    case homemadeLiqueur = "Homemade_Liqueur"
+    case party = "Punch_/_Party_Drink"
+    case coffeeOrTea = "Coffee_/_Tea"
+    case beer = "Beer"
+    case soft = "Soft_Drink"
+}
+
 struct APICaller {
     static let shared = APICaller()
     
@@ -25,6 +39,22 @@ struct APICaller {
     
     func getCocktails(containing ingredient: String, completion: @escaping (Result<[Cocktail], Error>) -> Void) {
         guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/filter.php?i=\(ingredient)") else { return }
+        
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
+            guard let data = data, error == nil else { return }
+            
+            do {
+                let decoded = try JSONDecoder().decode(CocktailsResponse.self, from: data)
+                completion(.success(decoded.drinks))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+    func getCocktails(byCategory category: CocktailCategory, completion: @escaping (Result<[Cocktail], Error>) -> Void) {
+        guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/filter.php?c=\(category.rawValue)") else { return }
         
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
             guard let data = data, error == nil else { return }
