@@ -37,9 +37,7 @@ struct APICaller {
     
     private init() { }
     
-    func getCocktails(containing ingredient: String, completion: @escaping (Result<[Cocktail], Error>) -> Void) {
-        guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/filter.php?i=\(ingredient)") else { return }
-        
+    private func getCocktails(fromURL url: URL, completion: @escaping (Result<[Cocktail], Error>) -> Void) {
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
             guard let data = data, error == nil else { return }
             
@@ -53,20 +51,16 @@ struct APICaller {
         task.resume()
     }
     
+    func getCocktails(containing ingredient: String, completion: @escaping (Result<[Cocktail], Error>) -> Void) {
+        guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/filter.php?i=\(ingredient)") else { return }
+        
+        getCocktails(fromURL: url, completion: completion)
+    }
+    
     func getCocktails(byCategory category: CocktailCategory, completion: @escaping (Result<[Cocktail], Error>) -> Void) {
         guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/filter.php?c=\(category.rawValue)") else { return }
         
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
-            guard let data = data, error == nil else { return }
-            
-            do {
-                let decoded = try JSONDecoder().decode(CocktailsResponse.self, from: data)
-                completion(.success(decoded.drinks))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-        task.resume()
+        getCocktails(fromURL: url, completion: completion)
     }
     
 }
