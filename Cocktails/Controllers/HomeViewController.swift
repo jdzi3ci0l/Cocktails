@@ -76,9 +76,18 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewTableViewCell.identifier, for: indexPath) as? CollectionViewTableViewCell else { return UITableViewCell() }
         
-        switch indexPath.row {
+        switch indexPath.section {
         case Sections.Vodka.rawValue:
             APICaller.shared.getCocktails(containing: "Vodka") { result in
+                switch result {
+                case .success(let cocktails):
+                    cell.configure(with: cocktails)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case Sections.Gin.rawValue:
+            APICaller.shared.getCocktails(containing: "Gin") { result in
                 switch result {
                 case .success(let cocktails):
                     cell.configure(with: cocktails)
