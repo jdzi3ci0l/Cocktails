@@ -10,12 +10,14 @@ import UIKit
 class CollectionViewTableViewCell: UITableViewCell {
     static let identifier = "CollectionViewTableViewCell"
     
+    private var cocktails: [Cocktail] = []
+    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 140, height: 200)
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "ccell")
+        collectionView.register(CocktailCollectionViewCell.self, forCellWithReuseIdentifier: CocktailCollectionViewCell.identifier)
         return collectionView
     }()
     
@@ -32,21 +34,29 @@ class CollectionViewTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         collectionView.frame = contentView.bounds
+    }
+    
+    func configure(with cocktails: [Cocktail]) {
+        self.cocktails = cocktails
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
 }
 
 extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return cocktails.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ccell", for: indexPath)
-        cell.backgroundColor = indexPath.row % 2 == 0 ? .systemIndigo : .systemPurple
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CocktailCollectionViewCell.identifier, for: indexPath) as? CocktailCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.configure(with: cocktails[indexPath.row])
         return cell
     }
 }

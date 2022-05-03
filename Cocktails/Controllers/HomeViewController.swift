@@ -7,10 +7,20 @@
 
 import UIKit
 
+
 class HomeViewController: UIViewController {
+    private enum Sections: Int {
+        case Vodka = 0
+        case Gin = 1
+        case NonAlcoholic = 2
+        case OptionalAcohol = 3
+        case Shots = 4
+        case SoftDrinks = 5
+        case PartyDrinks = 6
+    }
     
     private let homeFeedTableView: UITableView = {
-        let table = UITableView()
+        let table = UITableView(frame: .zero, style: .grouped)
         table.register(CollectionViewTableViewCell.self, forCellReuseIdentifier: CollectionViewTableViewCell.identifier)
         return table
     }()
@@ -29,6 +39,7 @@ class HomeViewController: UIViewController {
         
         homeFeedTableView.tableHeaderView = CocktailsHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 400))
         homeFeedTableView.tableHeaderView?.backgroundColor = .red
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,6 +75,20 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewTableViewCell.identifier, for: indexPath) as? CollectionViewTableViewCell else { return UITableViewCell() }
+        
+        switch indexPath.row {
+        case Sections.Vodka.rawValue:
+            APICaller.shared.getCocktails(containing: "Vodka") { result in
+                switch result {
+                case .success(let cocktails):
+                    cell.configure(with: cocktails)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        default:
+            return UITableViewCell()
+        }
         
         return cell
     }

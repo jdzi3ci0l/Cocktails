@@ -10,6 +10,9 @@
 		342CFB5828211DFA00CDF615 /* CocktailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342CFB5728211DFA00CDF615 /* CocktailsHeaderView.swift */; };
 		342CFB5B2821234100CDF615 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342CFB5A2821234100CDF615 /* APICaller.swift */; };
 		342CFB5E2821257000CDF615 /* Cocktail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342CFB5D2821257000CDF615 /* Cocktail.swift */; };
+		342CFB6028212DB900CDF615 /* CocktailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342CFB5F28212DB900CDF615 /* CocktailCollectionViewCell.swift */; };
+		342CFB6328212FA800CDF615 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 342CFB6228212FA800CDF615 /* SDWebImage */; };
+		342CFB6528212FA800CDF615 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 342CFB6428212FA800CDF615 /* SDWebImageMapKit */; };
 		34A5AE652820778E00EEE470 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A5AE642820778E00EEE470 /* AppDelegate.swift */; };
 		34A5AE672820778E00EEE470 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A5AE662820778E00EEE470 /* SceneDelegate.swift */; };
 		34A5AE692820778E00EEE470 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A5AE682820778E00EEE470 /* HomeViewController.swift */; };
@@ -27,6 +30,7 @@
 		342CFB5728211DFA00CDF615 /* CocktailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsHeaderView.swift; sourceTree = "<group>"; };
 		342CFB5A2821234100CDF615 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		342CFB5D2821257000CDF615 /* Cocktail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cocktail.swift; sourceTree = "<group>"; };
+		342CFB5F28212DB900CDF615 /* CocktailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailCollectionViewCell.swift; sourceTree = "<group>"; };
 		34A5AE612820778E00EEE470 /* Cocktails.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cocktails.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34A5AE642820778E00EEE470 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34A5AE662820778E00EEE470 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +51,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				342CFB6528212FA800CDF615 /* SDWebImageMapKit in Frameworks */,
+				342CFB6328212FA800CDF615 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +125,7 @@
 			children = (
 				34A5AE84282081E000EEE470 /* CollectionViewTableViewCell.swift */,
 				342CFB5728211DFA00CDF615 /* CocktailsHeaderView.swift */,
+				342CFB5F28212DB900CDF615 /* CocktailCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -139,6 +146,10 @@
 			dependencies = (
 			);
 			name = Cocktails;
+			packageProductDependencies = (
+				342CFB6228212FA800CDF615 /* SDWebImage */,
+				342CFB6428212FA800CDF615 /* SDWebImageMapKit */,
+			);
 			productName = Cocktails;
 			productReference = 34A5AE612820778E00EEE470 /* Cocktails.app */;
 			productType = "com.apple.product-type.application";
@@ -167,6 +178,9 @@
 				Base,
 			);
 			mainGroup = 34A5AE582820778E00EEE470;
+			packageReferences = (
+				342CFB6128212FA800CDF615 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = 34A5AE622820778E00EEE470 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -198,6 +212,7 @@
 				34A5AE7D282078AB00EEE470 /* SearchViewController.swift in Sources */,
 				34A5AE692820778E00EEE470 /* HomeViewController.swift in Sources */,
 				34A5AE652820778E00EEE470 /* AppDelegate.swift in Sources */,
+				342CFB6028212DB900CDF615 /* CocktailCollectionViewCell.swift in Sources */,
 				342CFB5B2821234100CDF615 /* APICaller.swift in Sources */,
 				34A5AE80282078E000EEE470 /* NearMeViewController.swift in Sources */,
 				34A5AE85282081E000EEE470 /* CollectionViewTableViewCell.swift in Sources */,
@@ -412,6 +427,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		342CFB6128212FA800CDF615 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		342CFB6228212FA800CDF615 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 342CFB6128212FA800CDF615 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		342CFB6428212FA800CDF615 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 342CFB6128212FA800CDF615 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 34A5AE592820778E00EEE470 /* Project object */;
 }
