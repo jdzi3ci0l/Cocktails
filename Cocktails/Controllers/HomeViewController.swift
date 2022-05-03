@@ -26,6 +26,9 @@ class HomeViewController: UIViewController {
         
         homeFeedTableView.delegate = self
         homeFeedTableView.dataSource = self
+        
+        homeFeedTableView.tableHeaderView = CocktailsHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 400))
+        homeFeedTableView.tableHeaderView?.backgroundColor = .red
     }
     
     override func viewDidLayoutSubviews() {

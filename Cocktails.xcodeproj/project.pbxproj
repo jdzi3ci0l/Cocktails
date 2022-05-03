@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		342CFB5828211DFA00CDF615 /* CocktailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342CFB5728211DFA00CDF615 /* CocktailsHeaderView.swift */; };
 		34A5AE652820778E00EEE470 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A5AE642820778E00EEE470 /* AppDelegate.swift */; };
 		34A5AE672820778E00EEE470 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A5AE662820778E00EEE470 /* SceneDelegate.swift */; };
 		34A5AE692820778E00EEE470 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A5AE682820778E00EEE470 /* HomeViewController.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		342CFB5728211DFA00CDF615 /* CocktailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsHeaderView.swift; sourceTree = "<group>"; };
 		34A5AE612820778E00EEE470 /* Cocktails.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cocktails.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34A5AE642820778E00EEE470 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34A5AE662820778E00EEE470 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				34A5AE84282081E000EEE470 /* CollectionViewTableViewCell.swift */,
+				342CFB5728211DFA00CDF615 /* CocktailsHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 				34A5AE85282081E000EEE470 /* CollectionViewTableViewCell.swift in Sources */,
 				34A5AE79282077F200EEE470 /* MainTabBarController.swift in Sources */,
 				34A5AE7B2820787500EEE470 /* FavouritesViewController.swift in Sources */,
+				342CFB5828211DFA00CDF615 /* CocktailsHeaderView.swift in Sources */,
 				34A5AE672820778E00EEE470 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
