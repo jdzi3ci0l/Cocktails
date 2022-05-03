@@ -32,6 +32,12 @@ enum CocktailCategory: String {
     case soft = "Soft_Drink"
 }
 
+enum CocktailAlcoholCategory: String {
+    case alcoholic = "Alcoholic"
+    case nonAlcoholic = "Non_Alcoholic"
+    case optional = "Optional_Alcohol"
+}
+
 struct APICaller {
     static let shared = APICaller()
     
@@ -63,4 +69,9 @@ struct APICaller {
         getCocktails(fromURL: url, completion: completion)
     }
     
+    func getCocktails(byAlcoholCategory category: CocktailAlcoholCategory, completion: @escaping (Result<[Cocktail], Error>) -> Void) {
+        guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/filter.php?a=\(category.rawValue)") else { return }
+        
+        getCocktails(fromURL: url, completion: completion)
+    }
 }
