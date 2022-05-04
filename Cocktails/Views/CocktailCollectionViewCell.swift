@@ -18,9 +18,23 @@ class CocktailCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private let cocktailNameLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .white
+        label.backgroundColor = .black
+        label.clipsToBounds = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.adjustsFontSizeToFitWidth = true
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(cocktailImageView)
+        cocktailImageView.addSubview(cocktailNameLabel)
+        cocktailImageView.bringSubviewToFront(cocktailNameLabel)
+        applyConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -32,8 +46,17 @@ class CocktailCollectionViewCell: UICollectionViewCell {
         cocktailImageView.frame = contentView.bounds
     }
     
+    private func applyConstraints() {
+        NSLayoutConstraint.activate([
+            cocktailNameLabel.bottomAnchor.constraint(equalTo: cocktailImageView.bottomAnchor),
+            cocktailNameLabel.widthAnchor.constraint(equalTo: cocktailImageView.widthAnchor),
+            cocktailNameLabel.centerXAnchor.constraint(equalTo: cocktailImageView.centerXAnchor)
+            ])
+    }
+    
     func configure(with cocktail: Cocktail) {
         guard let imageURL = cocktail.imageURL, let url = URL(string: imageURL) else { return }
         cocktailImageView.sd_setImage(with: url)
+        cocktailNameLabel.text = cocktail.name
     }
 }
