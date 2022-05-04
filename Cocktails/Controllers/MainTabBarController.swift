@@ -31,7 +31,12 @@ class MainTabBarController: UITabBarController {
         vc4.tabBarItem.image = UIImage(systemName: "location.circle")
        // vc4.tabBarItem.selectedImage = UIImage(systemName: "location.circle.fill")
         
-        tabBar.tintColor = .label
+        tabBar.tintColor = .white
+        tabBar.barTintColor = .black
+        
+        for vc in [vc1, vc2, vc3, vc4] {
+            vc.overrideUserInterfaceStyle = .dark
+        }
         
         setViewControllers([vc1, vc2, vc3, vc4], animated: true)
     }
