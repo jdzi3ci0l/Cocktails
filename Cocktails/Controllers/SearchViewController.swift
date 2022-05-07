@@ -70,4 +70,20 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = cocktails[indexPath.row].name
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCocktail = cocktails[indexPath.row]
+        APICaller.shared.getCocktailDetails(byID: selectedCocktail.id) { [weak self] result in
+            switch result {
+            case .success(let cocktail):
+                DispatchQueue.main.async {
+                    let detailVC = CocktailDetailViewController()
+                    detailVC.configure(with: cocktail)
+                    self?.navigationController?.pushViewController(detailVC, animated: true)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
