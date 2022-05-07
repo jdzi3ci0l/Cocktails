@@ -8,7 +8,7 @@
 import Foundation
 import OrderedCollections
 
-enum CocktailCategory: String, CaseIterable {
+enum CocktailCategory: String {
     case ordinary = "Ordinary Drink"
     case cocktail = "Cocktail"
     case shake = "Shake"
@@ -22,7 +22,7 @@ enum CocktailCategory: String, CaseIterable {
     case soft = "Soft Drink"
 }
 
-enum CocktailAlcoholCategory: String, CaseIterable {
+enum CocktailAlcoholCategory: String {
     case alcoholic = "Alcoholic"
     case nonAlcoholic = "Non alcoholic"
     case optional = "Optional alcohol"
