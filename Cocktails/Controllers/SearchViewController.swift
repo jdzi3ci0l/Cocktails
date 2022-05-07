@@ -9,9 +9,15 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
+    let searchController = UISearchController()
+
+    var cocktails: [Cocktail] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        title = "Search"
         view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.searchController = searchController
     }
 }

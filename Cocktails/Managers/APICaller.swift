@@ -73,6 +73,12 @@ struct APICaller {
         getCocktails(fromURL: url, completion: completion)
     }
     
+    func getCocktails(byName name: String, completion: @escaping (Result<[Cocktail], Error>) -> Void) {
+        guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/search.php?s=\(name)") else { return }
+        
+        getCocktails(fromURL: url, completion: completion)
+    }
+    
     func getCocktailDetails(byID id: String, completion: @escaping (Result<Cocktail, Error>) -> Void) {
         guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/lookup.php?i=\(id)") else { return }
         
