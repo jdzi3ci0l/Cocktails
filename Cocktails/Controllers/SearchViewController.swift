@@ -21,11 +21,15 @@ class SearchViewController: UIViewController {
     
     var cocktails: [Cocktail] = []
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Search"
         view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.searchController = searchController
         
         view.addSubview(resultsTableView)
