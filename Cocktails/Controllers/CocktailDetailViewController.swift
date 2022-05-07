@@ -160,7 +160,7 @@ class CocktailDetailViewController: UIViewController {
             instructionsLabel.topAnchor.constraint(equalTo: ingredientsTableView.bottomAnchor, constant: 20),
             instructionsLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
             instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            instructionsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            instructionsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50)
         ])
     }
     
