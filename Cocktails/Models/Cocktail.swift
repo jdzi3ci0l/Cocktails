@@ -52,7 +52,7 @@ struct Cocktail {
         }
         
         if let category = cocktailData.category {
-            self.category = CocktailCategory(rawValue: category.lowercased()) ?? .other
+            self.category = CocktailCategory(rawValue: category) ?? .other
         } else {
             self.category = .other
         }
