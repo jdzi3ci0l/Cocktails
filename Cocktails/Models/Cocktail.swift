@@ -11,14 +11,34 @@ struct CocktailsResponse: Codable {
     let drinks: [Cocktail]
 }
 
+enum CocktailCategory: String, CaseIterable {
+    case ordinary = "Ordinary Drink"
+    case cocktail = "Cocktail"
+    case shake = "Shake"
+    case other = "Other/Unknown"
+    case cocoa = "Cocoa"
+    case shot = "Shot"
+    case homemadeLiqueur = "Homemade Liqueur"
+    case party = "Punch / Party Drink"
+    case coffeeOrTea = "Coffee / Tea"
+    case beer = "Beer"
+    case soft = "Soft Drink"
+}
+
+enum CocktailAlcoholCategory: String, CaseIterable {
+    case alcoholic = "Alcoholic"
+    case nonAlcoholic = "Non Alcoholic"
+    case optional = "Optional Alcohol"
+}
+
 struct Cocktail: Codable {
     let id: String
     let name: String
-    let category: String?
-    let alcoholic: String?
     let glass: String?
     let instructions: String?
     let imageURL: String?
+    private let alcoholic: String?
+    private let strCategory: String?
     private let ingredient1: String?
     private let ingredient2: String?
     private let ingredient3: String?
@@ -33,6 +53,30 @@ struct Cocktail: Codable {
     private let measure5: String?
     private let measure6: String?
     private let measure7: String?
+    
+    var alcoholCategory: CocktailAlcoholCategory? {
+        guard let alcoholic = alcoholic else {
+            return nil
+        }
+        for category in CocktailAlcoholCategory.allCases {
+            if alcoholic.caseInsensitiveCompare(category.rawValue) == .orderedSame {
+                return category
+            }
+        }
+        return nil
+    }
+    
+    var category: CocktailCategory? {
+        guard let strCategory = strCategory else {
+            return nil
+        }
+        for category in CocktailCategory.allCases {
+            if strCategory.caseInsensitiveCompare(category.rawValue) == .orderedSame {
+                return category
+            }
+        }
+        return nil
+    }
     
     var ingredients: [String] {
         var ingredients: [String] = []
@@ -61,7 +105,7 @@ struct Cocktail: Codable {
     private enum CodingKeys: String, CodingKey {
         case id = "idDrink"
         case name = "strDrink"
-        case category = "strCategory"
+        case strCategory = "strCategory"
         case alcoholic = "strAlcoholic"
         case glass = "strGlass"
         case instructions = "strInstructions"
