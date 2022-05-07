@@ -34,6 +34,10 @@ class CocktailDetailViewController: UIViewController {
             if let category = cocktail?.category {
                 categoryLabel.text = "Category: \(category.rawValue)"
             }
+            
+            if let glass = cocktail?.glass {
+                categoryLabel.text = "Glass: \(glass)"
+            }
         }
     }
     
@@ -64,6 +68,12 @@ class CocktailDetailViewController: UIViewController {
         return label
     }()
     
+    private let glassTypeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -71,6 +81,7 @@ class CocktailDetailViewController: UIViewController {
         view.addSubview(nameLabel)
         view.addSubview(alcoholCategoryLabel)
         view.addSubview(categoryLabel)
+        view.addSubview(glassTypeLabel)
         applyConstraints()
     }
     
@@ -87,7 +98,9 @@ class CocktailDetailViewController: UIViewController {
             
             alcoholCategoryLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
             
-            categoryLabel.topAnchor.constraint(equalTo: alcoholCategoryLabel.bottomAnchor, constant: 5)
+            categoryLabel.topAnchor.constraint(equalTo: alcoholCategoryLabel.bottomAnchor, constant: 5),
+            
+            glassTypeLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 5)
             ])
     }
     

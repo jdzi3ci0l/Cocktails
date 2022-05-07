@@ -55,8 +55,8 @@ class CocktailCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with cocktail: Cocktail) {
-        guard let imageURL = cocktail.imageURL, let url = URL(string: imageURL) else { return }
-        cocktailImageView.sd_setImage(with: url)
+        guard let imageURL = URL(string: cocktail.imageURL) else { return }
+        cocktailImageView.sd_setImage(with: imageURL)
         cocktailNameLabel.text = cocktail.name
     }
 }

@@ -26,10 +26,12 @@ struct APICaller {
     private func getCocktails(fromURL url: URL, completion: @escaping (Result<[Cocktail], Error>) -> Void) {
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
             guard let data = data, error == nil else { return }
-            
             do {
                 let decoded = try JSONDecoder().decode(CocktailsResponse.self, from: data)
-                completion(.success(decoded.drinks))
+                let cocktails = decoded.drinks.map { cocktailData in
+                    Cocktail(from: cocktailData)
+                }
+                completion(.success(cocktails))
             } catch {
                 completion(.failure(error))
             }
@@ -44,7 +46,7 @@ struct APICaller {
             do {
                 let decoded = try JSONDecoder().decode(CocktailsResponse.self, from: data)
                 if let cocktail = decoded.drinks.first {
-                    completion(.success(cocktail))
+                    completion(.success(Cocktail(from: cocktail)))
                 }
             } catch {
                 completion(.failure(error))
