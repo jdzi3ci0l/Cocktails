@@ -56,6 +56,7 @@ class CocktailDetailViewController: UIViewController {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -109,7 +110,7 @@ class CocktailDetailViewController: UIViewController {
             cocktailImageView.heightAnchor.constraint(equalToConstant: 350),
             
             nameLabel.topAnchor.constraint(equalTo: cocktailImageView.bottomAnchor, constant: 10),
-            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             
             alcoholCategoryLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
