@@ -86,7 +86,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     self?.navigationController?.pushViewController(detailVC, animated: true)
                 }
             case .failure(let error):
-                print(error)
+                //Uncomment the following line only for debugging purposes
+                //print(error)
+                break
             }
         }
     }
