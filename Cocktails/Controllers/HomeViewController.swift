@@ -75,6 +75,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewTableViewCell.identifier, for: indexPath) as? CollectionViewTableViewCell else { return UITableViewCell() }
+    
+        cell.delegate = self
         
         switch indexPath.section {
         case Sections.Vodka.rawValue:
@@ -149,5 +151,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
+    }
+}
+
+extension HomeViewController: CollectionViewTableViewCellDelegate {
+    func collectionViewTableViewCell(_ cell: CollectionViewTableViewCell, selectedCocktail: Cocktail) {
+        DispatchQueue.main.async {
+            let detailVC = CocktailDetailViewController()
+            detailVC.configure(with: selectedCocktail)
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
     }
 }

@@ -19,20 +19,44 @@ struct Cocktail: Codable {
     let glass: String?
     let instructions: String?
     let imageURL: String?
-    let ingredient1: String?
-    let ingredient2: String?
-    let ingredient3: String?
-    let ingredient4: String?
-    let ingredient5: String?
-    let ingredient6: String?
-    let ingredient7: String?
-    let measure1: String?
-    let measure2: String?
-    let measure3: String?
-    let measure4: String?
-    let measure5: String?
-    let measure6: String?
-    let measure7: String?
+    private let ingredient1: String?
+    private let ingredient2: String?
+    private let ingredient3: String?
+    private let ingredient4: String?
+    private let ingredient5: String?
+    private let ingredient6: String?
+    private let ingredient7: String?
+    private let measure1: String?
+    private let measure2: String?
+    private let measure3: String?
+    private let measure4: String?
+    private let measure5: String?
+    private let measure6: String?
+    private let measure7: String?
+    
+    var ingredients: [String] {
+        var ingredients: [String] = []
+        if let ingredient1 = ingredient1 { ingredients.append(ingredient1) }
+        if let ingredient2 = ingredient2 { ingredients.append(ingredient2) }
+        if let ingredient3 = ingredient3 { ingredients.append(ingredient3) }
+        if let ingredient4 = ingredient4 { ingredients.append(ingredient4) }
+        if let ingredient5 = ingredient5 { ingredients.append(ingredient5) }
+        if let ingredient6 = ingredient6 { ingredients.append(ingredient6) }
+        if let ingredient7 = ingredient7 { ingredients.append(ingredient7) }
+        return ingredients
+    }
+    
+    var measures: [String] {
+        var measures: [String] = []
+        if let measure1 = measure1 { measures.append(measure1) }
+        if let measure2 = measure2 { measures.append(measure2) }
+        if let measure3 = measure3 { measures.append(measure3) }
+        if let measure4 = measure4 { measures.append(measure4) }
+        if let measure5 = measure5 { measures.append(measure5) }
+        if let measure6 = measure6 { measures.append(measure6) }
+        if let measure7 = measure7 { measures.append(measure7) }
+        return measures
+    }
     
     private enum CodingKeys: String, CodingKey {
         case id = "idDrink"

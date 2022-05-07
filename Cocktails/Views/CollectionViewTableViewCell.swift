@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol CollectionViewTableViewCellDelegate: AnyObject {
+    func collectionViewTableViewCell(_ cell: CollectionViewTableViewCell, selectedCocktail: Cocktail)
+}
+
 class CollectionViewTableViewCell: UITableViewCell {
     static let identifier = "CollectionViewTableViewCell"
     
     private var cocktails: [Cocktail] = []
+    
+    weak var delegate: CollectionViewTableViewCellDelegate?
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -59,4 +65,19 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
         cell.configure(with: cocktails[indexPath.row])
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedCocktail = cocktails[indexPath.row]
+        APICaller.shared.getCocktailDetails(byID: selectedCocktail.id) { [weak self] result in
+            switch result {
+            case .success(let cocktail):
+                if let strongSelf = self {
+                    self?.delegate?.collectionViewTableViewCell(strongSelf, selectedCocktail: cocktail)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
+

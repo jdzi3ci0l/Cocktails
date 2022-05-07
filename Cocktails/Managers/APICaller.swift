@@ -57,6 +57,22 @@ struct APICaller {
         task.resume()
     }
     
+    private func getCocktailDetails(fromURL url: URL, completion: @escaping (Result<Cocktail, Error>) -> Void) {
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
+            guard let data = data, error == nil else { return }
+            
+            do {
+                let decoded = try JSONDecoder().decode(CocktailsResponse.self, from: data)
+                if let cocktail = decoded.drinks.first {
+                    completion(.success(cocktail))
+                }
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
     func getCocktails(containing ingredient: String, completion: @escaping (Result<[Cocktail], Error>) -> Void) {
         guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/filter.php?i=\(ingredient)") else { return }
         
@@ -73,5 +89,11 @@ struct APICaller {
         guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/filter.php?a=\(category.rawValue)") else { return }
         
         getCocktails(fromURL: url, completion: completion)
+    }
+    
+    func getCocktailDetails(byID id: String, completion: @escaping (Result<Cocktail, Error>) -> Void) {
+        guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/lookup.php?i=\(id)") else { return }
+        
+        getCocktailDetails(fromURL: url, completion: completion)
     }
 }
