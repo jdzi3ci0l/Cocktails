@@ -7,9 +7,13 @@
 
 import UIKit
 
+protocol CocktailsHeaderViewDelegate: AnyObject {
+    func didTapRandomButton(result: Cocktail)
+}
+
 class CocktailsHeaderView: UIView {
     
-    let cocktailsImageView: UIImageView = {
+    private let cocktailsImageView: UIImageView = {
         //Photo by Bogdan Yukhymchuk @yuhy on Unsplash
         let imageView = UIImageView(image: UIImage(named: "cocktails"))
         imageView.contentMode = .scaleAspectFill
@@ -17,7 +21,7 @@ class CocktailsHeaderView: UIView {
         return imageView
     }()
     
-    let randomButton: UIButton = {
+    private lazy var randomButton: UIButton = {
         let button = UIButton()
         button.setTitle("Random", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
@@ -27,9 +31,11 @@ class CocktailsHeaderView: UIView {
         button.layer.cornerRadius = 5
         
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(randomButtonTapped), for: .touchUpInside)
         return button
     }()
     
+    weak var delegate: CocktailsHeaderViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -53,5 +59,16 @@ class CocktailsHeaderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         cocktailsImageView.frame = bounds
+    }
+    
+    @objc func randomButtonTapped() {
+        APICaller.shared.getRandomCocktailDetails { [weak self] result in
+            switch result {
+            case .success(let cocktail):
+                self?.delegate?.didTapRandomButton(result: cocktail)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }

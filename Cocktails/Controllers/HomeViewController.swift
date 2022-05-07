@@ -37,9 +37,9 @@ class HomeViewController: UIViewController {
         homeFeedTableView.delegate = self
         homeFeedTableView.dataSource = self
         
-        homeFeedTableView.tableHeaderView = CocktailsHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 400))
-        homeFeedTableView.tableHeaderView?.backgroundColor = .red
-        
+        let headerView = CocktailsHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 400))
+        headerView.delegate = self
+        homeFeedTableView.tableHeaderView = headerView
     }
     
     override func viewDidLayoutSubviews() {
@@ -159,6 +159,16 @@ extension HomeViewController: CollectionViewTableViewCellDelegate {
         DispatchQueue.main.async {
             let detailVC = CocktailDetailViewController()
             detailVC.configure(with: selectedCocktail)
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
+}
+
+extension HomeViewController: CocktailsHeaderViewDelegate {
+    func didTapRandomButton(result: Cocktail) {
+        DispatchQueue.main.async {
+            let detailVC = CocktailDetailViewController()
+            detailVC.configure(with: result)
             self.navigationController?.pushViewController(detailVC, animated: true)
         }
     }

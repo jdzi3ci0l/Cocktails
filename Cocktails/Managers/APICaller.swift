@@ -96,4 +96,10 @@ struct APICaller {
         
         getCocktailDetails(fromURL: url, completion: completion)
     }
+    
+    func getRandomCocktailDetails(completion: @escaping (Result<Cocktail, Error>) -> Void) {
+        guard let url = URL(string: "\(APIConstants.baseURL)/\(APIConstants.key)/random.php") else { return }
+        
+        getCocktailDetails(fromURL: url, completion: completion)
+    }
 }
