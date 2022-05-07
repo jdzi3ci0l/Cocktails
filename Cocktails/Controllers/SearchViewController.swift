@@ -55,8 +55,8 @@ extension SearchViewController: UISearchResultsUpdating {
                         self?.cocktails = cocktails
                         self?.resultsTableView.reloadData()
                     }
-                case .failure(let error):
-                    print(error)
+                case .failure:
+                    break
                 }
             }
         }
@@ -85,9 +85,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     detailVC.configure(with: cocktail)
                     self?.navigationController?.pushViewController(detailVC, animated: true)
                 }
-            case .failure(let error):
-                //Uncomment the following line only for debugging purposes
-                //print(error)
+            case .failure:
                 break
             }
         }
