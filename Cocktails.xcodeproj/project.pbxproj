@@ -15,6 +15,7 @@
 		342CFB6528212FA800CDF615 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 342CFB6428212FA800CDF615 /* SDWebImageMapKit */; };
 		3453BC55282653CD009DBA59 /* CocktailDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3453BC54282653CD009DBA59 /* CocktailDetailViewController.swift */; };
 		3453BC572826824E009DBA59 /* Cocktail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3453BC562826824E009DBA59 /* Cocktail.swift */; };
+		3453BC592826951D009DBA59 /* IngredientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3453BC582826951D009DBA59 /* IngredientTableViewCell.swift */; };
 		34A5AE652820778E00EEE470 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A5AE642820778E00EEE470 /* AppDelegate.swift */; };
 		34A5AE672820778E00EEE470 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A5AE662820778E00EEE470 /* SceneDelegate.swift */; };
 		34A5AE692820778E00EEE470 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A5AE682820778E00EEE470 /* HomeViewController.swift */; };
@@ -35,6 +36,7 @@
 		342CFB5F28212DB900CDF615 /* CocktailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailCollectionViewCell.swift; sourceTree = "<group>"; };
 		3453BC54282653CD009DBA59 /* CocktailDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailDetailViewController.swift; sourceTree = "<group>"; };
 		3453BC562826824E009DBA59 /* Cocktail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cocktail.swift; sourceTree = "<group>"; };
+		3453BC582826951D009DBA59 /* IngredientTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientTableViewCell.swift; sourceTree = "<group>"; };
 		34A5AE612820778E00EEE470 /* Cocktails.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cocktails.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34A5AE642820778E00EEE470 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34A5AE662820778E00EEE470 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				34A5AE84282081E000EEE470 /* CollectionViewTableViewCell.swift */,
 				342CFB5728211DFA00CDF615 /* CocktailsHeaderView.swift */,
 				342CFB5F28212DB900CDF615 /* CocktailCollectionViewCell.swift */,
+				3453BC582826951D009DBA59 /* IngredientTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 				34A5AE692820778E00EEE470 /* HomeViewController.swift in Sources */,
 				34A5AE652820778E00EEE470 /* AppDelegate.swift in Sources */,
 				342CFB6028212DB900CDF615 /* CocktailCollectionViewCell.swift in Sources */,
+				3453BC592826951D009DBA59 /* IngredientTableViewCell.swift in Sources */,
 				342CFB5B2821234100CDF615 /* APICaller.swift in Sources */,
 				3453BC55282653CD009DBA59 /* CocktailDetailViewController.swift in Sources */,
 				3453BC572826824E009DBA59 /* Cocktail.swift in Sources */,
@@ -371,8 +375,9 @@
 				INFOPLIST_FILE = Cocktails/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -398,8 +403,9 @@
 				INFOPLIST_FILE = Cocktails/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

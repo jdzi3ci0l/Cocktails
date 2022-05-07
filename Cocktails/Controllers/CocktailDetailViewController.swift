@@ -36,7 +36,7 @@ class CocktailDetailViewController: UIViewController {
             }
             
             if let glass = cocktail?.glass {
-                categoryLabel.text = "Glass: \(glass)"
+                glassTypeLabel.text = "Glass: \(glass)"
             }
         }
     }
@@ -50,10 +50,10 @@ class CocktailDetailViewController: UIViewController {
     }()
     
     private let nameLabel: UILabel = {
-       let label = UILabel()
-       label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-       label.translatesAutoresizingMaskIntoConstraints = false
-       return label
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     private let alcoholCategoryLabel: UILabel = {
@@ -74,6 +74,15 @@ class CocktailDetailViewController: UIViewController {
         return label
     }()
     
+    
+    private let ingredientsTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.register(IngredientTableViewCell.self, forCellReuseIdentifier: IngredientTableViewCell.identifier)
+        tableView.rowHeight = 30
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -82,6 +91,9 @@ class CocktailDetailViewController: UIViewController {
         view.addSubview(alcoholCategoryLabel)
         view.addSubview(categoryLabel)
         view.addSubview(glassTypeLabel)
+        view.addSubview(ingredientsTableView)
+        ingredientsTableView.delegate = self
+        ingredientsTableView.dataSource = self
         applyConstraints()
     }
     
@@ -100,12 +112,50 @@ class CocktailDetailViewController: UIViewController {
             
             categoryLabel.topAnchor.constraint(equalTo: alcoholCategoryLabel.bottomAnchor, constant: 5),
             
-            glassTypeLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 5)
-            ])
+            glassTypeLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 5),
+            
+            ingredientsTableView.topAnchor.constraint(equalTo: glassTypeLabel.bottomAnchor),
+            ingredientsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            ingredientsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            ingredientsTableView.heightAnchor.constraint(equalToConstant: 200)
+        ])
     }
     
     func configure(with cocktail: Cocktail) {
         self.cocktail = cocktail
     }
+}
+
+extension CocktailDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Ingredients"
+    }
     
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cocktail?.ingredients.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: IngredientTableViewCell.identifier) as? IngredientTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        if let ingredient = cocktail?.ingredients[indexPath.row] {
+            /*
+             Some cocktails ingredients don't have measures given, those are at the end of the array, so we check if
+             we haven't run out of ingredients with measurements
+             */
+            if indexPath.row < cocktail?.measures.count ?? 0 {
+                cell.configure(with: ingredient, amount: cocktail?.measures[indexPath.row] ?? "")
+            } else {
+                cell.configure(with: ingredient)
+            }
+        }
+        return cell
+    }
 }
