@@ -12,15 +12,15 @@ class CocktailDetailViewController: UIViewController {
     
     private var cocktail: Cocktail? {
         didSet {
-            title = cocktail?.name
-            nameLabel.text = cocktail?.name
-            if let imageURL = cocktail?.imageURL, let url = URL(string: imageURL) {
-                cocktailImageView.sd_setImage(with: url)
-            }
-            if let alcoholCategory = cocktail?.alcoholCategory {
+            if let cocktail = cocktail {
+                title = cocktail.name
+                nameLabel.text = cocktail.name
+                if let url = URL(string: cocktail.imageURL) {
+                    cocktailImageView.sd_setImage(with: url)
+                }
                 var alcoholCategoryEmoji = ""
                 
-                switch alcoholCategory {
+                switch cocktail.alcoholCategory {
                 case .alcoholic:
                     alcoholCategoryEmoji = "✅"
                 case .nonAlcoholic:
@@ -28,18 +28,15 @@ class CocktailDetailViewController: UIViewController {
                 case .optional:
                     alcoholCategoryEmoji = "✅ / ❌"
                 }
+                
                 alcoholCategoryLabel.text = "Alcohol: \(alcoholCategoryEmoji)"
-            }
-            
-            if let category = cocktail?.category {
-                categoryLabel.text = "Category: \(category.rawValue)"
-            }
-            
-            if let glass = cocktail?.glass {
-                glassTypeLabel.text = "Glass: \(glass)"
+                categoryLabel.text = "Category: \(cocktail.category.rawValue)"
+                glassTypeLabel.text = "Glass: \(cocktail.glass)"
+                instructionsLabel.text = cocktail.instructions
             }
         }
     }
+    
     
     private var keysArray: [String]  {
         Array((cocktail?.ingredients.keys)!)
@@ -85,28 +82,65 @@ class CocktailDetailViewController: UIViewController {
         tableView.register(IngredientTableViewCell.self, forCellReuseIdentifier: IngredientTableViewCell.identifier)
         tableView.rowHeight = 30
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.isScrollEnabled = false
         return tableView
+    }()
+    
+    private let instructionsLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private let contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        view.addSubview(cocktailImageView)
-        view.addSubview(nameLabel)
-        view.addSubview(alcoholCategoryLabel)
-        view.addSubview(categoryLabel)
-        view.addSubview(glassTypeLabel)
-        view.addSubview(ingredientsTableView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(cocktailImageView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(alcoholCategoryLabel)
+        contentView.addSubview(categoryLabel)
+        contentView.addSubview(glassTypeLabel)
+        contentView.addSubview(ingredientsTableView)
+        contentView.addSubview(instructionsLabel)
         ingredientsTableView.delegate = self
         ingredientsTableView.dataSource = self
         applyConstraints()
     }
     
+    override func updateViewConstraints() {
+        super.updateViewConstraints()
+        self.ingredientsTableView.heightAnchor.constraint(equalToConstant: ingredientsTableView.contentSize.height).isActive = true
+    }
+    
     private func applyConstraints() {
         NSLayoutConstraint.activate([
-            cocktailImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            cocktailImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            cocktailImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            
+            cocktailImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
+            cocktailImageView.widthAnchor.constraint(equalTo: view.widthAnchor),
             cocktailImageView.heightAnchor.constraint(equalToConstant: 350),
             
             nameLabel.topAnchor.constraint(equalTo: cocktailImageView.bottomAnchor, constant: 10),
@@ -122,7 +156,11 @@ class CocktailDetailViewController: UIViewController {
             ingredientsTableView.topAnchor.constraint(equalTo: glassTypeLabel.bottomAnchor),
             ingredientsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ingredientsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            ingredientsTableView.heightAnchor.constraint(equalToConstant: 200)
+            
+            instructionsLabel.topAnchor.constraint(equalTo: ingredientsTableView.bottomAnchor, constant: 20),
+            instructionsLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            instructionsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
