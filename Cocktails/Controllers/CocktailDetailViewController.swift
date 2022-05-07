@@ -41,6 +41,10 @@ class CocktailDetailViewController: UIViewController {
         }
     }
     
+    private var keysArray: [String]  {
+        Array((cocktail?.ingredients.keys)!)
+    }
+    
     private let cocktailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -145,17 +149,8 @@ extension CocktailDetailViewController: UITableViewDelegate, UITableViewDataSour
             return UITableViewCell()
         }
         
-        if let ingredient = cocktail?.ingredients[indexPath.row] {
-            /*
-             Some cocktails ingredients don't have measures given, those are at the end of the array, so we check if
-             we haven't run out of ingredients with measurements
-             */
-            if indexPath.row < cocktail?.measures.count ?? 0 {
-                cell.configure(with: ingredient, amount: cocktail?.measures[indexPath.row] ?? "")
-            } else {
-                cell.configure(with: ingredient)
-            }
-        }
+        let ingredient = keysArray[indexPath.row]
+        cell.configure(with: ingredient, amount: cocktail?.ingredients[ingredient] ?? "")
         return cell
     }
 }
