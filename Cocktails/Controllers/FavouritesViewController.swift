@@ -8,7 +8,6 @@
 import UIKit
 
 class FavouritesViewController: UIViewController {
-    
     private let favouritesTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(FavouriteCocktailTableViewCell.self, forCellReuseIdentifier: FavouriteCocktailTableViewCell.identifier)
@@ -61,5 +60,16 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard
+            let cell = tableView.cellForRow(at: indexPath) as? FavouriteCocktailTableViewCell,
+            let cocktail = cell.cocktail
+        else { return }
+        
+        let detailVC = CocktailDetailViewController()
+        detailVC.configure(with: cocktail)
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }

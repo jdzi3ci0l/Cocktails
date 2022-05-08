@@ -11,6 +11,8 @@ class FavouriteCocktailTableViewCell: UITableViewCell {
     
     static let identifier = "FavouriteCocktailTableViewCell"
     
+    var cocktail: Cocktail?
+    
     private let cocktailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -56,5 +58,6 @@ class FavouriteCocktailTableViewCell: UITableViewCell {
         guard let imageURL = URL(string: cocktail.imageURL) else { return }
         cocktailImageView.sd_setImage(with: imageURL)
         cocktailNameLabel.text = cocktail.name
+        self.cocktail = cocktail
     }
 }
