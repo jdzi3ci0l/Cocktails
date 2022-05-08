@@ -131,6 +131,8 @@ class CocktailDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionBarButtonPressed))
+        
         view.addSubview(scrollView)
         view.addSubview(favouriteButton)
         scrollView.addSubview(contentView)
@@ -141,8 +143,10 @@ class CocktailDetailViewController: UIViewController {
         contentView.addSubview(glassTypeLabel)
         contentView.addSubview(ingredientsTableView)
         contentView.addSubview(instructionsLabel)
+        
         ingredientsTableView.delegate = self
         ingredientsTableView.dataSource = self
+        
         applyConstraints()
     }
     
@@ -206,6 +210,21 @@ class CocktailDetailViewController: UIViewController {
             heartImage = UIImage(systemName: "heart.fill", withConfiguration: symbolConfig)
         }
         sender.setImage(heartImage, for: .normal)
+    }
+    
+    @objc func actionBarButtonPressed(_ sender: UIBarButtonItem) {
+        guard let cocktail = cocktail else {
+            return
+        }
+
+        let ingredientsString = "Ingredients:\n" +
+        cocktail.ingredients.map { key, value in
+            "\(key) - \(value)"
+        }.joined(separator: "\n")
+        
+        let activityVC = UIActivityViewController(activityItems: [cocktailImageView.image!, cocktail.name, ingredientsString, cocktail.instructions], applicationActivities: [])
+        
+        present(activityVC, animated: true)
     }
 }
 
