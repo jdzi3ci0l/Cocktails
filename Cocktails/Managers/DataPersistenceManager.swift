@@ -15,7 +15,7 @@ struct DataPersistenceManager {
     
     private init() {
         if let data = userDefaults.data(forKey: favouritesSaveKey)  {
-            if let decoded = try? JSONDecoder().decode(Set<String>.self, from: data) {
+            if let decoded = try? JSONDecoder().decode(OrderedSet<String>.self, from: data) {
                 favouriteCocktailsIDs = decoded
                 return
             }
@@ -23,7 +23,7 @@ struct DataPersistenceManager {
         favouriteCocktailsIDs = []
     }
     
-    private(set) var favouriteCocktailsIDs: Set<String>
+    private(set) var favouriteCocktailsIDs: OrderedSet<String>
     
     private let favouritesSaveKey = "Favourites"
     
@@ -33,7 +33,7 @@ struct DataPersistenceManager {
             favouriteCocktailsIDs.remove(id)
             favourited = false
         } else {
-            favouriteCocktailsIDs.insert(id)
+            favouriteCocktailsIDs.insert(id, at: 0)
             favourited = true
         }
         save()
