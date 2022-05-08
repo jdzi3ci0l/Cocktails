@@ -33,6 +33,14 @@ class CocktailDetailViewController: UIViewController {
                 categoryLabel.text = "Category: \(cocktail.category.rawValue)"
                 glassTypeLabel.text = "Glass: \(cocktail.glass)"
                 instructionsLabel.text = cocktail.instructions
+                
+                let symbolConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: UIImage.SymbolWeight.light, scale: UIImage.SymbolScale.default)
+                
+                var heartImage = UIImage(systemName: "heart", withConfiguration: symbolConfig)
+                if DataPersistenceManager.shared.favouriteCocktailsIDs.contains(cocktail.id) {
+                    heartImage = UIImage(systemName: "heart.fill", withConfiguration: symbolConfig)
+                }
+                favouriteButton.setImage(heartImage, for: .normal)
             }
         }
     }
@@ -78,9 +86,6 @@ class CocktailDetailViewController: UIViewController {
     
     private lazy var favouriteButton: UIButton = {
         let button = UIButton()
-        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: UIImage.SymbolWeight.light, scale: UIImage.SymbolScale.default)
-        let heartImage = UIImage(systemName: "heart", withConfiguration: symbolConfig)
-        button.setImage(heartImage, for: .normal)
         button.tintColor = .red
         button.setContentCompressionResistancePriority(UILayoutPriority(1000), for: .horizontal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -121,7 +126,7 @@ class CocktailDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -190,9 +195,15 @@ class CocktailDetailViewController: UIViewController {
     }
     
     @objc func favouriteButtonPressed(_ sender: UIButton) {
-        print("Button pressed")
+        guard let cocktail = cocktail else {
+            return
+        }
+
         let symbolConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: UIImage.SymbolWeight.light, scale: UIImage.SymbolScale.default)
-        let heartImage = UIImage(systemName: "heart.fill", withConfiguration: symbolConfig)
+        var heartImage = UIImage(systemName: "heart", withConfiguration: symbolConfig)
+        if DataPersistenceManager.shared.switchFavourite(cocktailID: cocktail.id) {
+            heartImage = UIImage(systemName: "heart.fill", withConfiguration: symbolConfig)
+        }
         sender.setImage(heartImage, for: .normal)
     }
 }
