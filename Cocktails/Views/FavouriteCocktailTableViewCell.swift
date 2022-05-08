@@ -11,7 +11,15 @@ class FavouriteCocktailTableViewCell: UITableViewCell {
     
     static let identifier = "FavouriteCocktailTableViewCell"
     
-    var cocktail: Cocktail?
+    private(set) var cocktail: Cocktail? {
+        didSet {
+            if let cocktail = cocktail {
+                guard let imageURL = URL(string: cocktail.imageURL) else { return }
+                cocktailImageView.sd_setImage(with: imageURL)
+                cocktailNameLabel.text = cocktail.name
+            }
+        }
+    }
     
     private let cocktailImageView: UIImageView = {
         let imageView = UIImageView()
@@ -55,9 +63,6 @@ class FavouriteCocktailTableViewCell: UITableViewCell {
     }
     
     func configure(with cocktail: Cocktail) {
-        guard let imageURL = URL(string: cocktail.imageURL) else { return }
-        cocktailImageView.sd_setImage(with: imageURL)
-        cocktailNameLabel.text = cocktail.name
         self.cocktail = cocktail
     }
 }
