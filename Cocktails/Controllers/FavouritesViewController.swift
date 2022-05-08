@@ -63,6 +63,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         guard
             let cell = tableView.cellForRow(at: indexPath) as? FavouriteCocktailTableViewCell,
             let cocktail = cell.cocktail

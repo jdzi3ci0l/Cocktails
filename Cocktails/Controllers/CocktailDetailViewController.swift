@@ -33,14 +33,6 @@ class CocktailDetailViewController: UIViewController {
                 categoryLabel.text = "Category: \(cocktail.category.rawValue)"
                 glassTypeLabel.text = "Glass: \(cocktail.glass)"
                 instructionsLabel.text = cocktail.instructions
-                
-                let symbolConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: UIImage.SymbolWeight.light, scale: UIImage.SymbolScale.default)
-                
-                var heartImage = UIImage(systemName: "heart", withConfiguration: symbolConfig)
-                if DataPersistenceManager.shared.favouriteCocktailsIDs.contains(cocktail.id) {
-                    heartImage = UIImage(systemName: "heart.fill", withConfiguration: symbolConfig)
-                }
-                favouriteButton.setImage(heartImage, for: .normal)
             }
         }
     }
@@ -84,6 +76,8 @@ class CocktailDetailViewController: UIViewController {
         return label
     }()
     
+    private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: UIImage.SymbolWeight.light, scale: UIImage.SymbolScale.default)
+    
     private lazy var favouriteButton: UIButton = {
         let button = UIButton()
         button.tintColor = .red
@@ -125,6 +119,13 @@ class CocktailDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
+        if let cocktail = cocktail {
+            var heartImage = UIImage(systemName: "heart", withConfiguration: symbolConfig)
+            if DataPersistenceManager.shared.favouriteCocktailsIDs.contains(cocktail.id) {
+                heartImage = UIImage(systemName: "heart.fill", withConfiguration: symbolConfig)
+            }
+            favouriteButton.setImage(heartImage, for: .normal)
+        }
     }
 
     override func viewDidLoad() {
