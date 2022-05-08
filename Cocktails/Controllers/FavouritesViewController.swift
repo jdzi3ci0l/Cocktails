@@ -11,7 +11,8 @@ class FavouritesViewController: UIViewController {
     
     private let favouritesTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(FavouriteCocktailTableViewCell.self, forCellReuseIdentifier: FavouriteCocktailTableViewCell.identifier)
+        tableView.rowHeight = 150
         return tableView
     }()
     
@@ -42,13 +43,18 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavouriteCocktailTableViewCell.identifier, for: indexPath) as? FavouriteCocktailTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        cell.accessoryType = .disclosureIndicator
+        
         let id = DataPersistenceManager.shared.favouriteCocktailsIDs[indexPath.row]
         APICaller.shared.getCocktailDetails(byID: id) { [weak cell] result in
             switch result {
             case .success(let cocktail):
                 DispatchQueue.main.async {
-                    cell?.textLabel?.text = cocktail.name
+                    cell?.configure(with: cocktail)
                 }
             case .failure:
                 break
