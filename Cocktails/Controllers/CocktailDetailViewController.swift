@@ -76,6 +76,18 @@ class CocktailDetailViewController: UIViewController {
         return label
     }()
     
+    private lazy var favouriteButton: UIButton = {
+        let button = UIButton()
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: UIImage.SymbolWeight.light, scale: UIImage.SymbolScale.default)
+        let heartImage = UIImage(systemName: "heart", withConfiguration: symbolConfig)
+        button.setImage(heartImage, for: .normal)
+        button.tintColor = .red
+        button.setContentCompressionResistancePriority(UILayoutPriority(1000), for: .horizontal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(favouriteButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
     
     private let ingredientsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -114,6 +126,7 @@ class CocktailDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubview(scrollView)
+        view.addSubview(favouriteButton)
         scrollView.addSubview(contentView)
         contentView.addSubview(cocktailImageView)
         contentView.addSubview(nameLabel)
@@ -149,7 +162,7 @@ class CocktailDetailViewController: UIViewController {
             cocktailImageView.heightAnchor.constraint(equalToConstant: 350),
             
             nameLabel.topAnchor.constraint(equalTo: cocktailImageView.bottomAnchor, constant: 10),
-            nameLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: favouriteButton.leadingAnchor, constant: -20),
             nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             
             alcoholCategoryLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
@@ -157,6 +170,9 @@ class CocktailDetailViewController: UIViewController {
             categoryLabel.topAnchor.constraint(equalTo: alcoholCategoryLabel.bottomAnchor, constant: 5),
             
             glassTypeLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 5),
+            
+            favouriteButton.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 5),
+            favouriteButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
             
             ingredientsTableView.topAnchor.constraint(equalTo: glassTypeLabel.bottomAnchor),
             ingredientsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -171,6 +187,13 @@ class CocktailDetailViewController: UIViewController {
     
     func configure(with cocktail: Cocktail) {
         self.cocktail = cocktail
+    }
+    
+    @objc func favouriteButtonPressed(_ sender: UIButton) {
+        print("Button pressed")
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: UIImage.SymbolWeight.light, scale: UIImage.SymbolScale.default)
+        let heartImage = UIImage(systemName: "heart.fill", withConfiguration: symbolConfig)
+        sender.setImage(heartImage, for: .normal)
     }
 }
 
