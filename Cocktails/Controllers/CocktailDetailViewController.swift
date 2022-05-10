@@ -173,24 +173,27 @@ class CocktailDetailViewController: UIViewController {
             
             nameLabel.topAnchor.constraint(equalTo: cocktailImageView.bottomAnchor, constant: 10),
             nameLabel.trailingAnchor.constraint(equalTo: favouriteButton.leadingAnchor, constant: -20),
-            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             
             alcoholCategoryLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
+            alcoholCategoryLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             
             categoryLabel.topAnchor.constraint(equalTo: alcoholCategoryLabel.bottomAnchor, constant: 5),
+            categoryLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             
             glassTypeLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 5),
+            glassTypeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             
             favouriteButton.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 5),
             favouriteButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
             
             ingredientsTableView.topAnchor.constraint(equalTo: glassTypeLabel.bottomAnchor),
-            ingredientsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            ingredientsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            ingredientsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            ingredientsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
             
             instructionsLabel.topAnchor.constraint(equalTo: ingredientsTableView.bottomAnchor, constant: 20),
             instructionsLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-            instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
             instructionsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50)
         ])
     }

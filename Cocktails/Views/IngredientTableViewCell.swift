@@ -34,7 +34,7 @@ class IngredientTableViewCell: UITableViewCell {
     private func applyConstraints() {
         NSLayoutConstraint.activate([
             nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
             
             measureLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             measureLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -20)
