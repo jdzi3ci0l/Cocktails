@@ -71,6 +71,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchViewController.reuseIdentifier, for: indexPath)
         cell.accessoryType = .disclosureIndicator
+        cell.backgroundColor = .systemBackground
         cell.textLabel?.text = cocktails[indexPath.row].name
         return cell
     }
