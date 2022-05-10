@@ -12,11 +12,16 @@ class HomeViewController: UIViewController {
     private enum Sections: Int {
         case Vodka = 0
         case Gin = 1
-        case NonAlcoholic = 2
-        case OptionalAcohol = 3
-        case Shots = 4
-        case SoftDrinks = 5
-        case PartyDrinks = 6
+        case Tequila = 2
+        case NonAlcoholic = 3
+        case OptionalAcohol = 4
+        case Shots = 5
+        case SoftDrinks = 6
+        case PartyDrinks = 7
+        case CoffeeTea = 8
+        case Beer = 9
+        case HomemadeLiqueur = 10
+        case Shake = 11
     }
     
     private let homeFeedTableView: UITableView = {
@@ -25,7 +30,7 @@ class HomeViewController: UIViewController {
         return table
     }()
     
-    let sectionTitles = ["Vodka", "Gin", "Non-Alcoholic", "Optional Alcohol", "Shots", "Soft Drinks", "Party Drinks"]
+    let sectionTitles = ["Vodka", "Gin", "Tequila", "Non-Alcoholic", "Optional Alcohol", "Shots", "Soft Drinks", "Party Drinks", "Coffee / Tea", "Beer", "Homemade Liqueur", "Shake"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +102,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error)
                 }
             }
+        case Sections.Tequila.rawValue:
+            APICaller.shared.getCocktails(containing: "Tequila") { result in
+                switch result {
+                case .success(let cocktails):
+                    cell.configure(with: cocktails)
+                case .failure(let error):
+                    print(error)
+                }
+            }
         case Sections.NonAlcoholic.rawValue:
             APICaller.shared.getCocktails(byAlcoholCategory: .nonAlcoholic) { result in
                 switch result {
@@ -135,6 +149,42 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             }
         case Sections.PartyDrinks.rawValue:
             APICaller.shared.getCocktails(byCategory: .party) { result in
+                switch result {
+                case .success(let cocktails):
+                    cell.configure(with: cocktails)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case Sections.CoffeeTea.rawValue:
+            APICaller.shared.getCocktails(byCategory: .coffeeOrTea) { result in
+                switch result {
+                case .success(let cocktails):
+                    cell.configure(with: cocktails)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case Sections.Beer.rawValue:
+            APICaller.shared.getCocktails(byCategory: .beer) { result in
+                switch result {
+                case .success(let cocktails):
+                    cell.configure(with: cocktails)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case Sections.HomemadeLiqueur.rawValue:
+            APICaller.shared.getCocktails(byCategory: .homemadeLiqueur) { result in
+                switch result {
+                case .success(let cocktails):
+                    cell.configure(with: cocktails)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case Sections.Shake.rawValue:
+            APICaller.shared.getCocktails(byCategory: .shake) { result in
                 switch result {
                 case .success(let cocktails):
                     cell.configure(with: cocktails)
