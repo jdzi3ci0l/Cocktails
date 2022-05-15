@@ -213,6 +213,11 @@ class CocktailDetailViewController: UIViewController {
             heartImage = UIImage(systemName: "heart.fill", withConfiguration: symbolConfig)
         }
         sender.setImage(heartImage, for: .normal)
+        
+        UIView.animate(withDuration: 0.5) {
+            sender.imageView?.alpha = 0.7
+            sender.imageView?.alpha = 1.0
+        }
     }
     
     @objc func actionBarButtonPressed(_ sender: UIBarButtonItem) {
