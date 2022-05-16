@@ -54,26 +54,19 @@ class CocktailDetailViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         label.adjustsFontSizeToFitWidth = true
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let alcoholCategoryLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        return UILabel()
     }()
     
     private let categoryLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        return UILabel()
     }()
     
     private let glassTypeLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        return UILabel()
     }()
     
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: UIImage.SymbolWeight.light, scale: UIImage.SymbolScale.default)
@@ -95,6 +88,16 @@ class CocktailDetailViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isScrollEnabled = false
         return tableView
+    }()
+    
+    private lazy var cocktailDetailsStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [nameLabel, alcoholCategoryLabel, categoryLabel, glassTypeLabel])
+        stack.axis = .vertical
+        stack.distribution = .equalSpacing
+        stack.spacing = 5
+        stack.alignment = .leading
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
     }()
     
     private let instructionsLabel: UILabel = {
@@ -132,15 +135,11 @@ class CocktailDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionBarButtonPressed))
-        
         view.addSubview(scrollView)
         view.addSubview(favouriteButton)
         scrollView.addSubview(contentView)
         contentView.addSubview(cocktailImageView)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(alcoholCategoryLabel)
-        contentView.addSubview(categoryLabel)
-        contentView.addSubview(glassTypeLabel)
+        contentView.addSubview(cocktailDetailsStack)
         contentView.addSubview(ingredientsTableView)
         contentView.addSubview(instructionsLabel)
         
@@ -171,20 +170,11 @@ class CocktailDetailViewController: UIViewController {
             cocktailImageView.widthAnchor.constraint(equalTo: view.widthAnchor),
             cocktailImageView.heightAnchor.constraint(equalToConstant: 350),
             
-            nameLabel.topAnchor.constraint(equalTo: cocktailImageView.bottomAnchor, constant: 10),
-            nameLabel.trailingAnchor.constraint(equalTo: favouriteButton.leadingAnchor, constant: -20),
-            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            cocktailDetailsStack.topAnchor.constraint(equalTo: cocktailImageView.bottomAnchor, constant: 10),
+            cocktailDetailsStack.trailingAnchor.constraint(equalTo: favouriteButton.leadingAnchor, constant: -20),
+            cocktailDetailsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             
-            alcoholCategoryLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
-            alcoholCategoryLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            
-            categoryLabel.topAnchor.constraint(equalTo: alcoholCategoryLabel.bottomAnchor, constant: 5),
-            categoryLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            
-            glassTypeLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 5),
-            glassTypeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            
-            favouriteButton.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 5),
+            favouriteButton.topAnchor.constraint(equalTo: cocktailDetailsStack.topAnchor, constant: 5),
             favouriteButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
             
             ingredientsTableView.topAnchor.constraint(equalTo: glassTypeLabel.bottomAnchor),
